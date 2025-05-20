@@ -1,5 +1,5 @@
 import { SheetDefinition } from '../types';
-import { ImporterRequirementsType } from './types';
+import { CustomFileLoader, ImporterRequirementsType } from './types';
 import { fieldIsRequired } from '../validators';
 import { allowUserToMapColumn } from '../mapper';
 
@@ -43,4 +43,41 @@ export const formatFileSize = (bytes: number): string => {
   }
 
   return `${Math.round(size)} ${units[unitIndex]}`;
+};
+
+const loadFile = async (file: File): Promise<ProgressEvent<FileReader>> => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      resolve(event);
+    };
+    reader.readAsArrayBuffer(file);
+  });
+};
+
+export const convertCsvFile = async (
+  file: File,
+  customFileLoaders: CustomFileLoader[] | undefined
+): Promise<File> => {
+  const matchedCustomFileLoader = customFileLoaders?.find(
+    (loader) => loader.mimeType === file.type
+  );
+
+  if (matchedCustomFileLoader) {
+    const loadedEvent = await loadFile(file);
+
+    const { fileName, csvData } = await matchedCustomFileLoader.convert(
+      loadedEvent,
+      file
+    );
+
+    const csvBlob = new Blob([csvData], { type: 'text/csv' });
+    const csvFile = new File([csvBlob], fileName, {
+      type: 'text/csv',
+    });
+
+    return csvFile;
+  }
+
+  return file;
 };

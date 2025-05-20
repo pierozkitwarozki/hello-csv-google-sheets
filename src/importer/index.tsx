@@ -23,12 +23,14 @@ import { Button, Root, Tooltip } from '../components';
 import { TranslationProvider, useTranslations } from '../i18';
 import BackToMappingButton from './components/BackToMappingButton';
 import { Uploader } from '../uploader';
+import { convertCsvFile } from '../uploader/utils';
 
 function ImporterBody({
   theme,
   onComplete,
   allowManualDataEntry,
   sheets,
+  customFileLoaders,
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
   maxFileSizeInBytes = 20 * 1024 * 1024, // 20MB,
@@ -78,28 +80,30 @@ function ImporterBody({
   const preventUpload = preventUploadOnErrors && validationErrors.length > 0;
 
   function onFileUploaded(file: File) {
-    parseCsv({
-      file,
-      onCompleted: async (newParsed) => {
-        const csvHeaders = newParsed.meta.fields!;
+    convertCsvFile(file, customFileLoaders).then((csvFile) => {
+      parseCsv({
+        file: csvFile,
+        onCompleted: async (newParsed) => {
+          const csvHeaders = newParsed.meta.fields!;
 
-        const suggestedMappings =
-          customSuggestedMapper != null
-            ? await customSuggestedMapper(sheets, csvHeaders)
-            : buildSuggestedHeaderMappings(sheets, csvHeaders);
+          const suggestedMappings =
+            customSuggestedMapper != null
+              ? await customSuggestedMapper(sheets, csvHeaders)
+              : buildSuggestedHeaderMappings(sheets, csvHeaders);
 
-        dispatch({
-          type: 'FILE_PARSED',
-          payload: { parsed: newParsed, rowFile: file },
-        });
+          dispatch({
+            type: 'FILE_PARSED',
+            payload: { parsed: newParsed, rowFile: file },
+          });
 
-        dispatch({
-          type: 'COLUMN_MAPPING_CHANGED',
-          payload: {
-            mappings: suggestedMappings,
-          },
-        });
-      },
+          dispatch({
+            type: 'COLUMN_MAPPING_CHANGED',
+            payload: {
+              mappings: suggestedMappings,
+            },
+          });
+        },
+      });
     });
   }
 
@@ -200,6 +204,7 @@ function ImporterBody({
             onEnterDataManually={onEnterDataManually}
             allowManualDataEntry={allowManualDataEntry}
             maxFileSizeInBytes={maxFileSizeInBytes}
+            customFileLoaders={customFileLoaders}
           />
         )}
 

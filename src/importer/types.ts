@@ -9,6 +9,7 @@ import type {
   ColumnMapping,
   SheetRow,
   ImportStatistics,
+  CustomFileLoader,
   Translation,
 } from '../types';
 
@@ -20,6 +21,7 @@ export interface ImporterDefinition {
   theme?: ThemeVariant;
   // Called after the columns are mapped to sheet definitions by the user
   onDataColumnsMapped?: OnDataColumnsMappedCallback;
+  customFileLoaders?: CustomFileLoader[];
   allowManualDataEntry?: boolean;
   onComplete: (
     state: ImporterState,
