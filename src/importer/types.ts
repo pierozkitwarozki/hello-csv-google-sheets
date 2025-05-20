@@ -1,4 +1,4 @@
-import {
+import type {
   ThemeVariant,
   ImporterValidationError,
   ParsedFile,
@@ -9,12 +9,14 @@ import {
   ColumnMapping,
   SheetRow,
   ImportStatistics,
+  Translation,
 } from '../types';
 
 // --------- Importer Definition Types ---------
 
 export interface ImporterDefinition {
   sheets: SheetDefinition[];
+  translationResources?: Record<string, Translation>;
   theme?: ThemeVariant;
   // Called after the columns are mapped to sheet definitions by the user
   onDataColumnsMapped?: OnDataColumnsMappedCallback;
