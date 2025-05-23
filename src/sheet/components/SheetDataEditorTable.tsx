@@ -1,6 +1,6 @@
 import { flexRender, Table } from '@tanstack/react-table';
 import SheetDataEditorCell from './SheetDataEditorCell';
-import { SheetDefinition, SheetRow, SheetState } from '../types';
+import { EnumLabelDict, SheetDefinition, SheetRow, SheetState } from '../types';
 import { ImporterOutputFieldType, ImporterValidationError } from '../../types';
 import { Checkbox } from '../../components';
 import { useTranslations } from '../../i18';
@@ -20,6 +20,7 @@ interface Props {
   ) => void;
   selectedRows: SheetRow[];
   setSelectedRows: (rows: SheetRow[]) => void;
+  enumLabelDict: EnumLabelDict;
 }
 
 export default function SheetDataEditorTable({
@@ -31,6 +32,7 @@ export default function SheetDataEditorTable({
   onCellValueChanged,
   selectedRows,
   setSelectedRows,
+  enumLabelDict,
 }: Props) {
   const { t } = useTranslations();
 
@@ -156,6 +158,7 @@ export default function SheetDataEditorTable({
                     }
                     clearRowsSelection={() => setSelectedRows([])}
                     errorsText={cellErrorsText}
+                    enumLabelDict={enumLabelDict}
                   />
                 </td>
               );

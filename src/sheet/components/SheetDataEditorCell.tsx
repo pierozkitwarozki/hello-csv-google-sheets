@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import {
+  EnumLabelDict,
   ImporterOutputFieldType,
   SheetColumnDefinition,
   SheetState,
@@ -19,6 +20,7 @@ interface Props {
   allData: SheetState[];
   clearRowsSelection: () => void;
   errorsText: string;
+  enumLabelDict: EnumLabelDict;
 }
 
 export default function SheetDataEditorCell({
@@ -28,6 +30,7 @@ export default function SheetDataEditorCell({
   allData,
   clearRowsSelection,
   errorsText,
+  enumLabelDict,
 }: Props) {
   const { t } = useTranslations();
 
@@ -110,8 +113,11 @@ export default function SheetDataEditorCell({
       allData
     );
 
+    const { sheetId, sheetColumnId } = columnDefinition.typeArguments;
+    const labelDict = enumLabelDict[sheetId][sheetColumnId] ?? {};
+
     const selectOptions = referenceData.map((value) => ({
-      label: value,
+      label: labelDict[value] ?? value,
       value,
     }));
 
