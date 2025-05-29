@@ -16,8 +16,17 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
 import { useTranslations } from '../../i18';
-import { SheetDefinition, SheetRow, SheetViewMode } from '../types';
-import { ImporterValidationError, RemoveRowsPayload } from '../../types';
+import {
+  EnumLabelDict,
+  SheetDefinition,
+  SheetRow,
+  SheetViewMode,
+} from '../types';
+import {
+  CsvDownloadMode,
+  ImporterValidationError,
+  RemoveRowsPayload,
+} from '../../types';
 import { removeDuplicates } from '../../utils';
 
 interface Props {
@@ -36,6 +45,8 @@ interface Props {
   sheetValidationErrors: ImporterValidationError[];
   rowValidationSummary: Record<SheetViewMode, number>;
   resetState: () => void;
+  enumLabelDict: EnumLabelDict;
+  csvDownloadMode: CsvDownloadMode;
 }
 
 export default function SheetDataEditorActions({
@@ -54,6 +65,8 @@ export default function SheetDataEditorActions({
   sheetValidationErrors,
   rowValidationSummary,
   resetState,
+  enumLabelDict,
+  csvDownloadMode,
 }: Props) {
   const { t } = useTranslations();
 
@@ -152,9 +165,7 @@ export default function SheetDataEditorActions({
           )}
         >
           <TrashIcon
-            className={`h-6 w-6 ${
-              selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses
-            }`}
+            className={`h-6 w-6 ${selectedRows.length > 0 ? 'cursor-pointer' : disabledButtonClasses}`}
             onClick={() => setRemoveConfirmationModalOpen(true)}
           />
         </Tooltip>
@@ -168,7 +179,14 @@ export default function SheetDataEditorActions({
             className={`h-6 w-6 ${
               rowData.length > 0 ? 'cursor-pointer' : disabledButtonClasses
             }`}
-            onClick={() => downloadSheetAsCsv(sheetDefinition, rowData)}
+            onClick={() =>
+              downloadSheetAsCsv(
+                sheetDefinition,
+                rowData,
+                enumLabelDict,
+                csvDownloadMode
+              )
+            }
           />
         </Tooltip>
 
