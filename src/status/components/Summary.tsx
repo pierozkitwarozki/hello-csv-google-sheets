@@ -1,4 +1,9 @@
-import { ImporterMode, ImportStatistics, SheetState } from '../../types';
+import {
+  ImporterMode,
+  ImportStatistics,
+  SheetState,
+  EnumLabelDict,
+} from '../../types';
 import { Card } from '../../components';
 import SummaryInfo from './SummaryInfo';
 import { useTranslations } from '../../i18';
@@ -11,6 +16,7 @@ interface Props {
   statistics?: ImportStatistics;
   rowFile?: File;
   completedWithErrors?: boolean;
+  enumLabelDict: EnumLabelDict;
 }
 
 export default function Summary({
@@ -19,6 +25,7 @@ export default function Summary({
   statistics,
   rowFile,
   completedWithErrors,
+  enumLabelDict,
 }: Props) {
   const { t } = useTranslations();
 
@@ -38,6 +45,7 @@ export default function Summary({
           statistics={statistics}
           rowFile={rowFile}
           completedWithErrors={completedWithErrors}
+          enumLabelDict={enumLabelDict}
         />
       </div>
     </Card>

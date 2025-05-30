@@ -288,6 +288,7 @@ function ImporterBody({
             sheetData={sheetData}
             statistics={importStatistics}
             rowFile={state.rowFile}
+            enumLabelDict={enumLabelDict}
           />
         )}
       </Root>

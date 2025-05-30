@@ -1,6 +1,11 @@
 import { Alert, Button } from '@/components';
 import { useTranslations } from '@/i18';
-import { SheetState, ImportStatistics, ImporterMode } from '@/types';
+import {
+  SheetState,
+  ImportStatistics,
+  ImporterMode,
+  EnumLabelDict,
+} from '@/types';
 import { getTotalRows } from '../utils';
 import Summary from './Summary';
 import { useImporterDefinition } from '@/importer/hooks';
@@ -13,6 +18,7 @@ interface Props {
   mode: Mode;
   rowFile?: File;
   resetState: () => void;
+  enumLabelDict: EnumLabelDict;
 }
 
 export default function Completed({
@@ -21,6 +27,7 @@ export default function Completed({
   mode,
   rowFile,
   resetState,
+  enumLabelDict,
 }: Props) {
   const { onSummaryFinished } = useImporterDefinition();
   const { t } = useTranslations();
@@ -53,6 +60,7 @@ export default function Completed({
           statistics={statistics}
           rowFile={rowFile}
           completedWithErrors={completedWithErrors}
+          enumLabelDict={enumLabelDict}
         />
         <div className="mt-auto flex-none">
           <div className="mt-5 flex justify-end">

@@ -1,6 +1,6 @@
 import { Alert, Button } from '../../components';
 import { useTranslations } from '../../i18';
-import { SheetState, ImporterMode } from '../../types';
+import { SheetState, ImporterMode, EnumLabelDict } from '../../types';
 import Summary from './Summary';
 
 type Mode = Extract<ImporterMode, 'failed'>;
@@ -11,6 +11,7 @@ interface Props {
   rowFile?: File;
   sheetData: SheetState[];
   mode: Mode;
+  enumLabelDict: EnumLabelDict;
 }
 
 export default function Failed({
@@ -19,6 +20,7 @@ export default function Failed({
   rowFile,
   sheetData,
   mode,
+  enumLabelDict,
 }: Props) {
   const { t } = useTranslations();
 
@@ -39,6 +41,7 @@ export default function Failed({
             sheetData={sheetData}
             rowFile={rowFile}
             completedWithErrors={false}
+            enumLabelDict={enumLabelDict}
           />
         </div>
 

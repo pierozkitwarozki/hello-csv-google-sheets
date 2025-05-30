@@ -2,7 +2,7 @@ import { ImporterMode } from '@/importer/types';
 import Completed from './Completed';
 import Failed from './Failed';
 import Uploading from './Uploading';
-import { ImportStatistics, SheetState } from '@/types';
+import { ImportStatistics, SheetState, EnumLabelDict } from '@/types';
 
 type Mode = Extract<ImporterMode, 'submit' | 'failed' | 'completed'>;
 
@@ -15,6 +15,7 @@ interface Props {
   sheetData: SheetState[];
   statistics?: ImportStatistics;
   rowFile?: File;
+  enumLabelDict: EnumLabelDict;
 }
 
 export default function ImportStatus({
@@ -26,6 +27,7 @@ export default function ImportStatus({
   resetState,
   statistics,
   rowFile,
+  enumLabelDict,
 }: Props) {
   return (
     <div className="h-full">
@@ -40,6 +42,7 @@ export default function ImportStatus({
           onBackToPreview={onBackToPreview}
           rowFile={rowFile}
           sheetData={sheetData}
+          enumLabelDict={enumLabelDict}
         />
       )}
 
@@ -50,6 +53,7 @@ export default function ImportStatus({
           statistics={statistics}
           rowFile={rowFile}
           resetState={resetState}
+          enumLabelDict={enumLabelDict}
         />
       )}
     </div>
