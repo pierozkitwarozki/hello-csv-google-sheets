@@ -3,22 +3,32 @@ import FileUploader from './FileUploader';
 import { getImporterRequirements } from '../utils';
 import { useTranslations } from '@/i18';
 import { useImporterDefinition } from '@/importer/hooks';
+import { useEffect } from 'preact/hooks';
 
 interface Props {
   onFileUploaded: (file: File) => void;
   onEnterDataManually: () => void;
+  customFile: File | null;
 }
 
 export default function Uploader({
   onFileUploaded,
   onEnterDataManually,
+  customFile
 }: Props) {
   const { sheets } = useImporterDefinition();
   const importerRequirements = getImporterRequirements(sheets);
   const { t } = useTranslations();
 
+  useEffect(() => {
+    if (customFile) {
+      onFileUploaded(customFile);
+    }
+  }, [customFile]);
+
   return (
-    <div className="flex h-full flex-col space-y-4">
+    <>
+    { !customFile && <div className="flex h-full flex-col space-y-4">
       <div className="flex-none text-2xl">{t('uploader.uploadAFile')}</div>
       <div className="flex-auto md:min-h-0">
         <div className="flex h-full flex-col-reverse gap-5 md:flex-row">
@@ -33,6 +43,7 @@ export default function Uploader({
           </div>
         </div>
       </div>
-    </div>
+    </div>}
+    </>
   );
 }

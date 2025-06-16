@@ -1,6 +1,6 @@
 {
-  "name": "hello-csv",
-  "version": "0.3.1",
+  "name": "hello-csv-custom-file",
+  "version": "0.4.0",
   "description": "A modern CSV importer written in Preact",
   "author": "HelloCSV",
   "license": "MIT",
@@ -48,19 +48,19 @@
       "require": "./dist/react/index.cjs.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./react/index.css": "./dist/react/hello-csv.css",
+    "./react/index.css": "./dist/react/hello-csv-custom-file.css",
     "./preact": {
       "import": "./dist/preact/index.es.js",
       "require": "./dist/preact/index.cjs.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./preact/index.css": "./dist/preact/hello-csv.css",
+    "./preact/index.css": "./dist/preact/hello-csv-custom-file.css",
     "./bundled": {
       "import": "./dist/bundled/index.es.js",
       "require": "./dist/bundled/index.cjs.js",
       "types": "./dist/types/index.d.ts"
     },
-    "./bundled/index.css": "./dist/bundled/hello-csv.css"
+    "./bundled/index.css": "./dist/bundled/hello-csv-custom-file.css"
   },
   "peerDependencies": {
     "preact": "^10.25.4",
@@ -103,6 +103,7 @@
     "tailwindcss": "^4.0.4",
     "typescript": "~5.7.2",
     "vite": "^6.3.4",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
     "vite-plugin-dts": "^4.5.0",
     "vitest": "^3.0.5"
   },

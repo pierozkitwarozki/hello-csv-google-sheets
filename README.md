@@ -54,7 +54,7 @@ From CDN
 
 ```
 <script src="https://cdn.jsdelivr.net/npm/hello-csv@0.3.1/dist/bundled/index.es.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hello-csv@0.3.1/dist/bundled/hello-csv.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hello-csv@0.3.1/dist/bundled/hello-csv-custom-file.css">
 ```
 
 ## Documentation

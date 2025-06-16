@@ -183,11 +183,11 @@ export default function Select<T>({
               </span>
             </ComboboxOption>
           )}
-          {groupedOptions.map(({ label, items }) => (
+          {groupedOptions.map(({ label, items }, index) => (          
             <div key={label || 'all'}>
               {label && (
                 <div className="py-2 pr-9 pl-3 text-gray-400 uppercase">
-                  {label}
+                  {label + index}
                 </div>
               )}
               {items.map((option) => (

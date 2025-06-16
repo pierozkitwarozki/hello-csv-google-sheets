@@ -39,6 +39,7 @@ export interface ImporterDefinition {
   ) => ColumnMapping[] | Promise<ColumnMapping[]>;
   persistenceConfig?: PersistenceConfig;
   csvDownloadMode?: CsvDownloadMode;
+  file?: File | null;
 }
 
 export type CsvDownloadMode = 'value' | 'label';

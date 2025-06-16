@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo, useId } from 'preact/hooks';
+import { useRef, useEffect, useMemo, useId, useState } from 'preact/hooks';
 
 import HeaderMapper from '../mapper/components/HeaderMapper';
 import SheetDataEditor from '../sheet/components/SheetDataEditor';
@@ -39,6 +39,7 @@ function ImporterBody({
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
   customSuggestedMapper,
+  file
 }: ImporterDefinitionWithDefaults) {
   const { t } = useTranslations();
 
@@ -49,6 +50,7 @@ function ImporterBody({
   const dispatch = useImporterStateDispatch();
 
   const idPrefix = useId();
+  const [customFile, setCustomFile] = useState<File | null>(null);
 
   const {
     mode,
@@ -203,6 +205,13 @@ function ImporterBody({
     dispatch({ type: 'MAPPING' });
   }
 
+  useEffect(() => {
+    if (!file) {
+      return;
+    }
+    setCustomFile(file);
+  }, [file, mode]);
+
   return (
     <ThemeSetter>
       <Root
@@ -213,6 +222,7 @@ function ImporterBody({
           <Uploader
             onFileUploaded={onFileUploaded}
             onEnterDataManually={onEnterDataManually}
+            customFile={customFile}
           />
         )}
 
