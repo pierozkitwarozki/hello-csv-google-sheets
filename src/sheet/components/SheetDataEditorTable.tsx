@@ -73,18 +73,18 @@ export default function SheetDataEditorTable({
 
   return (
     <table className="min-w-full border-separate border-spacing-0">
-      <thead className="bg-hello-csv-muted sticky top-0 z-10">
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            <th className={`${headerClass} sticky left-0 z-20`}>
+      <thead className="bg-hello-csv-muted sticky top-0 z-900">
+        {table.getHeaderGroups().map((headerGroup, headerGroupIndex) => (
+          <tr key={headerGroup.id + '_' + headerGroupIndex}>
+            <th className={`${headerClass} sticky left-0 z-900`}>
               <Checkbox
                 checked={selectAllChecked}
                 setChecked={toggleSelectAll}
               />
             </th>
 
-            {headerGroup.headers.map((header) => (
-              <th key={header.id} className={`z-10 ${headerClass}`}>
+            {headerGroup.headers.map((header, headerIndex) => (
+              <th key={header.id + '_' + headerIndex} className={`z-900 ${headerClass}`}>
                 <div
                   className={`flex ${
                     header.column.getCanSort()
@@ -121,10 +121,10 @@ export default function SheetDataEditorTable({
       </thead>
 
       <tbody className="divide-y divide-gray-200">
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
+        {table.getRowModel().rows.map((row, rowIndex) => (
+          <tr key={row.id + '_row_' + rowIndex}>
             <td
-              className={`bg-hello-csv-muted ${cellClass} sticky left-0 z-6 py-3.5 pr-3 pl-4`}
+              className={`bg-hello-csv-muted ${cellClass} sticky left-0 z-900 py-3.5 pr-3 pl-4`}
             >
               <Checkbox
                 checked={selectedRows.includes(row.original)}

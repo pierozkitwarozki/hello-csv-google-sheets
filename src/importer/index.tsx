@@ -231,6 +231,7 @@ function ImporterBody({
             onMappingsChanged={onMappingsChanged}
             onMappingsSet={onMappingsSet}
             onBack={onBackToUpload}
+            isFirstStep={customFile != null}
           />
         )}
         {mode === 'preview' && (

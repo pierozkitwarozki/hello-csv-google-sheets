@@ -9,7 +9,6 @@ import {
 } from '@/components';
 import { downloadSheetAsCsv, removeDuplicates } from '@/utils';
 import {
-  XMarkIcon,
   TrashIcon,
   PlusIcon,
   ArrowDownTrayIcon,
@@ -215,12 +214,6 @@ export default function SheetDataEditorActions({
           variant="danger"
         />
       </div>
-      <Tooltip className="ml-5" tooltipText={t('sheet.resetTooltip')}>
-        <XMarkIcon
-          className="h-6 w-6 cursor-pointer"
-          onClick={() => setResetConfirmationModalOpen(true)}
-        />
-      </Tooltip>
 
       <ConfirmationModal
         open={resetConfirmationModalOpen}

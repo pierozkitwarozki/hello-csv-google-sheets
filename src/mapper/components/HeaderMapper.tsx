@@ -17,12 +17,14 @@ interface Props {
   onMappingsChanged: (mappings: ColumnMapping[]) => void;
   onMappingsSet: () => void;
   onBack: () => void;
+  isFirstStep: boolean;
 }
 
 export default function HeaderMapper({
   onMappingsChanged,
   onMappingsSet,
   onBack,
+  isFirstStep
 }: Props) {
   const { columnMappings, parsedFile } = useImporterState();
   const { sheets: sheetDefinitions } = useImporterDefinition();
@@ -69,7 +71,7 @@ export default function HeaderMapper({
 
                 return (
                   <HeaderMapperSelection
-                    key={columnIndex}
+                    key={columnIndex + '_mapper_selection'}
                     csvHeader={header}
                     currentMapping={headerMapping}
                     setMapping={(headerMapping) => {
@@ -105,7 +107,14 @@ export default function HeaderMapper({
         </div>
       )}
       <div className="mt-auto flex-none">
-        <div className="mt-5 flex justify-between">
+        {
+          isFirstStep 
+          ? <div className="mt-5 flex justify-end">
+            <Button onClick={onMappingsSet} disabled={!mapingsValid}>
+              {t('mapper.confirm')}
+            </Button>
+          </div> 
+          : <div className="mt-5 flex justify-between">
           <Button variant="secondary" outline onClick={onBack}>
             {t('mapper.back')}
           </Button>
@@ -113,6 +122,8 @@ export default function HeaderMapper({
             {t('mapper.confirm')}
           </Button>
         </div>
+        }
+        {}
       </div>
     </div>
   );

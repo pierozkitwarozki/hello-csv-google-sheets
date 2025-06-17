@@ -169,7 +169,7 @@ export default function Select<T>({
         <ComboboxOptions
           anchor="bottom"
           transition
-          className="absolute z-99 mt-1 max-h-60 w-[var(--input-width)] overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
+          className="absolute z-1000 mt-1 max-h-60 w-[var(--input-width)] overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
         >
           {hasNoOptions && (
             <ComboboxOption
@@ -184,15 +184,15 @@ export default function Select<T>({
             </ComboboxOption>
           )}
           {groupedOptions.map(({ label, items }, index) => (          
-            <div key={label || 'all'}>
+            <div key={label + '_' + index || 'all'}>
               {label && (
-                <div className="py-2 pr-9 pl-3 text-gray-400 uppercase">
-                  {label + index}
+                <div className="py-2 pr-9 pl-3 text-gray-400">
+                  {label}
                 </div>
               )}
-              {items.map((option) => (
+              {items.map((option, optionIndex) => (
                 <ComboboxOption
-                  key={option.value as string}
+                  key={option.value as string + '_' + optionIndex}
                   value={option.value}
                   className="group data-focus:bg-hello-csv-primary relative flex cursor-default items-center py-2 pr-9 pl-3 text-gray-900 select-none data-focus:text-white data-focus:outline-hidden"
                 >

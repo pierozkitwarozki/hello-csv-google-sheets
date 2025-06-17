@@ -13,7 +13,7 @@ export type ButtonGroupDefinition = {
 };
 
 const buttonStyles = cva(
-  'relative inline-flex cursor-pointer items-center px-3 py-2 text-sm font-semibold ring-gray-300 ring-1 ring-inset focus:z-10',
+  'relative inline-flex cursor-pointer items-center px-3 py-2 text-sm font-semibold ring-gray-300 ring-1 ring-inset focus:z-900',
   {
     variants: {
       active: {
