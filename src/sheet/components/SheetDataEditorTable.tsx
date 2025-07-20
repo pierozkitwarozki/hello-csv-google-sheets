@@ -76,7 +76,7 @@ export default function SheetDataEditorTable({
       <thead className="bg-hello-csv-muted sticky top-0 z-900">
         {table.getHeaderGroups().map((headerGroup, headerGroupIndex) => (
           <tr key={headerGroup.id + '_' + headerGroupIndex}>
-            <th className={`${headerClass} sticky left-0 z-900`}>
+            <th className={`${headerClass} z-900`}>
               <Checkbox
                 checked={selectAllChecked}
                 setChecked={toggleSelectAll}
@@ -124,7 +124,7 @@ export default function SheetDataEditorTable({
         {table.getRowModel().rows.map((row, rowIndex) => (
           <tr key={row.id + '_row_' + rowIndex}>
             <td
-              className={`bg-hello-csv-muted ${cellClass} sticky left-0 z-900 py-3.5 pr-3 pl-4`}
+              className={`bg-hello-csv-muted ${cellClass} left-0 py-3.5 pr-3 pl-4`}
             >
               <Checkbox
                 checked={selectedRows.includes(row.original)}
@@ -147,7 +147,7 @@ export default function SheetDataEditorTable({
                 .join(', ');
 
               return (
-                <td key={cell.id} className={cellClass}>
+                <td key={`${cell.id}_${row.id}_${cellIndex}`} className={cellClass}>
                   <SheetDataEditorCell
                     rowId={row.id}
                     columnDefinition={

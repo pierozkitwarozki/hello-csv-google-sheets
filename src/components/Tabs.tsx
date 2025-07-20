@@ -34,7 +34,7 @@ export default function Tabs({
             {tabs.map((tab) => (
               <button
                 id={`${idPrefix}-tab-${tab.value}`}
-                key={tab.label}
+                key={`tab-${tab.value}`}
                 role="tab"
                 aria-selected={tab.value === activeTab}
                 aria-current={tab.value === activeTab ? 'page' : undefined}

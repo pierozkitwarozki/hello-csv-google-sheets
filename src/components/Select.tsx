@@ -184,7 +184,7 @@ export default function Select<T>({
             </ComboboxOption>
           )}
           {groupedOptions.map(({ label, items }, index) => (          
-            <div key={label + '_' + index || 'all'}>
+            <div key={`group_${label || 'ungrouped'}_${index}`}>
               {label && (
                 <div className="py-2 pr-9 pl-3 text-gray-400">
                   {label}
@@ -192,7 +192,7 @@ export default function Select<T>({
               )}
               {items.map((option, optionIndex) => (
                 <ComboboxOption
-                  key={option.value as string + '_' + optionIndex}
+                  key={`option_${String(option.value)}_${index}_${optionIndex}`}
                   value={option.value}
                   className="group data-focus:bg-hello-csv-primary relative flex cursor-default items-center py-2 pr-9 pl-3 text-gray-900 select-none data-focus:text-white data-focus:outline-hidden"
                 >
