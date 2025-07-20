@@ -15,6 +15,7 @@ import {
   ImporterDefinitionWithDefaults,
   ImporterDefinition,
   RemoveRowsPayload,
+  SheetColumnDefinition,
 } from '../types';
 import { ThemeSetter } from '../theme/ThemeSetter';
 import { parseCsv } from '../parser';
@@ -99,6 +100,31 @@ function ImporterBody({
         file: csvFile,
         onCompleted: async (newParsed) => {
           const csvHeaders = newParsed.meta.fields!;
+
+          const allSheetColumnIds = sheets.flatMap(sheet => 
+            sheet.columns.map(column => column.id)
+          );
+
+          const unmappedColumns = csvHeaders.filter(csvHeader => {
+            if (!csvHeader || csvHeader.trim() === '' || csvHeader.startsWith('_')) {
+              return false;
+            }
+
+            const normalizedCsvHeader = csvHeader.toLowerCase().trim();
+            const matchesColumnId = allSheetColumnIds.some(id => 
+              id.toLowerCase().trim() === normalizedCsvHeader
+            );
+
+            return !matchesColumnId
+          });
+
+          const unmappedSheetColumnDefinitons: SheetColumnDefinition[] = unmappedColumns.map(column => ({
+            id: column,
+            type: 'string',
+            label: column
+          }));
+
+          currentSheetDefinition.columns = [...currentSheetDefinition.columns, ...unmappedSheetColumnDefinitons];
 
           const suggestedMappings =
             customSuggestedMapper != null
