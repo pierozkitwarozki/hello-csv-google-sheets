@@ -9,6 +9,7 @@ interface Props {
   onBackToPreview: () => void;
   resetState: () => void;
   enumLabelDict: EnumLabelDict;
+  skipSummary: boolean;
 }
 
 export default function ImportStatus({
@@ -16,6 +17,7 @@ export default function ImportStatus({
   onBackToPreview,
   resetState,
   enumLabelDict,
+  skipSummary
 }: Props) {
   const { mode } = useImporterState();
 
@@ -32,7 +34,7 @@ export default function ImportStatus({
       )}
 
       {mode === 'completed' && (
-        <Completed resetState={resetState} enumLabelDict={enumLabelDict} />
+        <Completed skipSummary={skipSummary} resetState={resetState} enumLabelDict={enumLabelDict} />
       )}
     </div>
   );

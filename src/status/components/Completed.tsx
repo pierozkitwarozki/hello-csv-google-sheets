@@ -5,13 +5,15 @@ import { getTotalRows } from '../utils';
 import Summary from './Summary';
 import { useImporterDefinition } from '@/importer/hooks';
 import { useImporterState } from '@/importer/reducer';
+import { useEffect } from 'preact/hooks';
 
 interface Props {
   resetState: () => void;
   enumLabelDict: EnumLabelDict;
+  skipSummary: boolean;
 }
 
-export default function Completed({ resetState, enumLabelDict }: Props) {
+export default function Completed({ resetState, enumLabelDict, skipSummary }: Props) {
   const { sheetData, importStatistics: statistics } = useImporterState();
   const { onSummaryFinished } = useImporterDefinition();
   const { t } = useTranslations();
@@ -19,6 +21,12 @@ export default function Completed({ resetState, enumLabelDict }: Props) {
   const totalRecords = getTotalRows(sheetData);
   const recordsImported = statistics?.imported ?? 0;
   const completedWithErrors = !!statistics?.failed || !!statistics?.skipped;
+
+  useEffect(() => { 
+    if (!completedWithErrors && skipSummary) {
+      (onSummaryFinished || resetState)?.();
+    }
+  }, [completedWithErrors, skipSummary]);
 
   return (
     <div className="flex flex-col">
@@ -38,7 +46,7 @@ export default function Completed({ resetState, enumLabelDict }: Props) {
           )}
         />
       </div>
-      <div className="mt-6">
+      {!skipSummary && <div className="mt-6">
         <Summary
           completedWithErrors={completedWithErrors}
           enumLabelDict={enumLabelDict}
@@ -50,7 +58,7 @@ export default function Completed({ resetState, enumLabelDict }: Props) {
             </Button>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

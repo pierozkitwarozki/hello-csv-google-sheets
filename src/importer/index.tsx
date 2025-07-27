@@ -40,7 +40,9 @@ function ImporterBody({
   onDataColumnsMapped,
   preventUploadOnValidationErrors,
   customSuggestedMapper,
-  file
+  file,
+  skipSummary,
+  skipHeaderMapping
 }: ImporterDefinitionWithDefaults) {
   const { t } = useTranslations();
 
@@ -258,6 +260,7 @@ function ImporterBody({
             onMappingsSet={onMappingsSet}
             onBack={onBackToUpload}
             isFirstStep={customFile != null}
+            skipHeaderMapping={skipHeaderMapping ?? false}
           />
         )}
         {mode === 'preview' && (
@@ -296,7 +299,7 @@ function ImporterBody({
               {currentSheetData.rows.length > 0 && (
                 <div className="mt-5 flex justify-between">
                   <div>
-                    {columnMappings != null && (
+                    {(columnMappings != null && !skipHeaderMapping) && (
                       <BackToMappingButton onBackToMapping={onBackToMapping} />
                     )}
                   </div>
@@ -320,6 +323,7 @@ function ImporterBody({
             onBackToPreview={onBackToPreview}
             resetState={resetState}
             enumLabelDict={enumLabelDict}
+            skipSummary={skipSummary ?? false}
           />
         )}
       </Root>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useState } from 'preact/hooks';
 import { Button, Error } from '@/components';
 import { useTranslations } from '@/i18';
 import { ColumnMapping } from '@/types';
@@ -18,13 +18,15 @@ interface Props {
   onMappingsSet: () => void;
   onBack: () => void;
   isFirstStep: boolean;
+  skipHeaderMapping: boolean;
 }
 
 export default function HeaderMapper({
   onMappingsChanged,
   onMappingsSet,
   onBack,
-  isFirstStep
+  isFirstStep,
+  skipHeaderMapping
 }: Props) {
   const { columnMappings, parsedFile } = useImporterState();
   const { sheets: sheetDefinitions } = useImporterDefinition();
@@ -52,8 +54,15 @@ export default function HeaderMapper({
     return calculateMappingExamples(data, hoveredCsvHeader);
   }, [hoveredCsvHeader, data]);
 
+  useEffect(() => {
+    if (skipHeaderMapping) {
+      onMappingsSet();
+    }
+  }, [skipHeaderMapping]);
+
   return (
-    <div className="flex h-full flex-col">
+    <> {
+      !skipHeaderMapping && <div className="flex h-full flex-col">
       <div className="flex-none text-2xl">{t('mapper.reviewAndConfirm')}</div>
       <div className="min-h-0 flex-auto">
         <div className="flex h-full justify-between space-x-5">
@@ -126,5 +135,7 @@ export default function HeaderMapper({
         {}
       </div>
     </div>
+    }
+    </>
   );
 }

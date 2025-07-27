@@ -40,6 +40,8 @@ export interface ImporterDefinition {
   persistenceConfig?: PersistenceConfig;
   csvDownloadMode?: CsvDownloadMode;
   file?: File | null;
+  skipSummary?: boolean;
+  skipHeaderMapping?: boolean;
 }
 
 export type CsvDownloadMode = 'value' | 'label';

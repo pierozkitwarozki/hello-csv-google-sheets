@@ -1,6 +1,6 @@
 {
   "name": "hello-csv-custom-file",
-  "version": "0.5.7",
+  "version": "0.6.1",
   "description": "A modern CSV importer written in Preact",
   "author": "HelloCSV",
   "license": "MIT",
